@@ -38,14 +38,9 @@ public class ASM {
             System.out.println("Here is the use case for " + role + "s:");
 
             switch (role) {
-                case "admin":
-                    Admin.run(products);
-                    break;
-                case "guest":
-                    Guest.run(products);
-                    break;
-                default:
-                    System.out.println("Invalid role.");
+                case "admin" -> Admin.run(products);
+                case "guest" -> Guest.run(products);
+                default -> System.out.println("Invalid role.");
             }
         } else {
             System.out.println("Invalid login.");
@@ -68,17 +63,19 @@ public class ASM {
         System.out.print(message + " ");
         return scanner.nextLine();
     }
-    private static void generateRandomProducts(int numProducts) {
-        Random rand = new Random();
-
-        for (int i = 0; i < numProducts; i++) {
-            String name = "Product " + (i + 1);
-            double price = rand.nextDouble() * 100.0;
-            int stock = rand.nextInt(100);
-
-            products.add(new Product(name, price, stock));
-        }
+//    private static void generateRandomProducts(int numProducts) {
+//        Random rand = new Random();
+//
+//        for (int i = 0; i < numProducts; i++) {
+//            String name = "Product " + (i + 1);
+//            double price = rand.nextDouble() * 100.0;
+//            int stock = rand.nextInt(100);
+//
+//            products.add(new Product(name, price, stock));
+//        }
+//    
     }
     }
+    
 
 

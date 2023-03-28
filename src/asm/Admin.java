@@ -26,22 +26,15 @@ public class Admin {
             int option = scanner.nextInt();
 
             switch (option) {
-                case 1:
-                    ViewProducts.run(products);
-                    break;
-                case 2:
-                    AddProduct.run(products);
-                    break;
-                case 3:
-                    EditProduct.run(products);
-                    break;
-                case 4:
-                    DeleteProduct.run(products);
-                    break;
-                case 5:
+                case 1 -> ViewProduct.run(products);
+                case 2 -> AddProduct.run(products);
+                case 3 -> EditProduct.run(products);
+                case 4 -> DeleteProduct.run(products);
+                case 5 -> {
                     return;
-                default:
-                    System.out.println("Invalid option.");
+                }
+                default -> System.out.println("Invalid option.");
             }
         }
     }
+}
