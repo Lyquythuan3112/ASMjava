@@ -4,16 +4,25 @@
  */
 package asm;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 /**
  *
  * @author ASUS
  */
     
 public class ViewProduct {
+     private static final Map<String, String> Product = new HashMap<>();
+     static {
+    // Add some sample Product credentials and roles to the map
+    Product.put("Bike", "200");
+    Product.put("Motor", "1000");
+}
+     
     public static void run(List<Product> products) {
-        for (Product product : products) {
-            System.out.println(product.toString());
+//        for (Product product : products) {
+            System.out.println(Product);
         }
-    }
+//    }
 }
 

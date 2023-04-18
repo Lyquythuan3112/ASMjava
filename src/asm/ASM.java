@@ -18,8 +18,8 @@ public class ASM {
      private static final List<Product> products = new ArrayList<>();
     static {
     // Add some sample user credentials and roles to the map
-    users.put("admin", "adminpass:admin");
-    users.put("guest", "guestpass:guest");
+    users.put("admin", "admin");
+    users.put("guest", "guest");
 }
 
 
@@ -39,7 +39,7 @@ public class ASM {
 
             switch (role) {
                 case "admin" -> Admin.run(products);
-                case "guest" -> Guest.run(products);
+//                case "guest" -> Guest.run(products);
                 default -> System.out.println("Invalid role.");
             }
         } else {
@@ -75,7 +75,7 @@ public class ASM {
 //        }
 //    
     }
-    }
+    
     
 
 
