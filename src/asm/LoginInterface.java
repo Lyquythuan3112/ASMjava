@@ -129,14 +129,17 @@ public class LoginInterface extends javax.swing.JFrame {
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
         // TODO add your handling code here:
         String username = jTextField1.getText();
-        String password = jTextField2.getText();
-    
+String password = jTextField2.getText();
+
+if (username.isEmpty() || password.isEmpty()) {
+    JOptionPane.showMessageDialog(this, "Please enter both username and password.");
+} else {
     try {
         BufferedReader reader = new BufferedReader(new FileReader("account.txt"));
         String line;
         boolean success = false;
         while ((line = reader.readLine()) != null) {
-            String[] parts = line.split(" ");
+            String[] parts = line.split(",");
             if (username.equals(parts[0]) && password.equals(parts[1])) {
                 success = true;
                 break;
@@ -154,6 +157,7 @@ public class LoginInterface extends javax.swing.JFrame {
     } catch (IOException e) {
         e.printStackTrace();
     }
+}
     }//GEN-LAST:event_LoginActionPerformed
 
     private void RegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterActionPerformed

@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.GenericDeclaration;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -29,6 +30,7 @@ public class Maininterface extends javax.swing.JFrame {
         initComponents();
         fillYearComboBox();
         fillMonthComboBox();
+        Save.setVisible(false);
     }
 private void fillYearComboBox() {
            int currentYear = Calendar.getInstance().get(Calendar.YEAR);
@@ -73,7 +75,7 @@ private void fillDayComboBox(int daysInMonth) {
 
         Add = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        Delete = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -96,6 +98,8 @@ private void fillDayComboBox(int daysInMonth) {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         Classes = new javax.swing.JComboBox<>();
+        Refesh = new javax.swing.JButton();
+        Save = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -113,7 +117,12 @@ private void fillDayComboBox(int daysInMonth) {
             }
         });
 
-        jButton3.setText("Delete");
+        Delete.setText("Delete");
+        Delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Name");
 
@@ -197,52 +206,58 @@ private void fillDayComboBox(int daysInMonth) {
             }
         });
 
+        Refesh.setText("Refesh");
+        Refesh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RefeshActionPerformed(evt);
+            }
+        });
+
+        Save.setText("Save");
+        Save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SaveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 899, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 10, Short.MAX_VALUE))
+                .addGap(0, 23, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel7)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(8, 8, 8)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(Male)
-                        .addGap(18, 18, 18)
-                        .addComponent(Female))
-                    .addComponent(Name)
-                    .addComponent(Major)
-                    .addComponent(Classes, 0, 281, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Address)
-                            .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel7)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addComponent(jLabel2))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel1)
+                                .addGap(8, 8, 8)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(Male)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(Female))
+                            .addComponent(Name)
+                            .addComponent(Major)
+                            .addComponent(Classes, 0, 281, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Save, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addGap(18, 18, 18)
@@ -254,9 +269,25 @@ private void fillDayComboBox(int daysInMonth) {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel10)
                                 .addGap(18, 18, 18)
-                                .addComponent(Day, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(4, 4, 4)))
-                .addGap(108, 108, 108))
+                                .addComponent(Day, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(Address)
+                                    .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(94, 94, 94))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(Delete, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Refesh, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(99, 99, 99))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,7 +307,7 @@ private void fillDayComboBox(int daysInMonth) {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel5)
                                     .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(25, 25, 25)
+                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel10)
@@ -303,11 +334,13 @@ private void fillDayComboBox(int daysInMonth) {
                                     .addComponent(Male)
                                     .addComponent(Female)
                                     .addComponent(jLabel6))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Add)
                     .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(Delete)
+                    .addComponent(Save)
+                    .addComponent(Refesh))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -374,78 +407,81 @@ private void fillDayComboBox(int daysInMonth) {
     private void Add(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add
         // TODO add your handling code here:
     try {
-        FileWriter fw = new FileWriter("students.txt", true);
-        PrintWriter pw = new PrintWriter(fw);
-        
-        String name = Name.getText();
-        String studentClass = Classes.getSelectedItem().toString();
-        String major = Major.getText();
-        String address = Address.getText();
-        String email = Email.getText();
-        String year = Year.getSelectedItem().toString();
-        String month = Month.getSelectedItem().toString();
-        String day = Day.getSelectedItem().toString();
+    FileWriter fw = new FileWriter("students.txt", true);
+    PrintWriter pw = new PrintWriter(fw);
 
-        pw.println(name + "," + studentClass + "," + major + "," + address + "," + email + "," + year + "," + month + "," + day);
-        pw.flush();
-        pw.close();
-        JOptionPane.showMessageDialog(null, "Student added to file successfully.");
-    } catch (IOException ex) {
-        JOptionPane.showMessageDialog(null, "Error writing to file: " + ex.getMessage());
-    }
-    // clear the form
-    Name.setText("");
-    Male.setSelected(true);
-    Year.setSelectedIndex(0);
-    Month.setSelectedIndex(0);
-    Day.setSelectedIndex(0);
-    Classes.setSelectedIndex(0);
+    String name = Name.getText();
+    String studentClass = Classes.getSelectedItem().toString();
+    String major = Major.getText();
+    String gender = "";
+    if (Male.isSelected()) {
+        gender = "Male";
+    } else if (Female.isSelected()) {
+        gender = "Female";
+    } 
+    String address = Address.getText();
+    String email = Email.getText();
+    {
+            if (!email.contains("@")) {
+        JOptionPane.showMessageDialog(null, "Invalid email address", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }}
+    String year = Year.getSelectedItem().toString();
+    String month = Month.getSelectedItem().toString();
+    String day = Day.getSelectedItem().toString();
+    
+
+    pw.println(name + "," + studentClass + "," + major + "," + gender + "," + address + "," + email + "," + year + "," + month + "," + day);
+    pw.flush();
+    pw.close();
+    JOptionPane.showMessageDialog(null, "Student added to file successfully.");
+} catch (IOException ex) {
+    JOptionPane.showMessageDialog(null, "Error writing to file: " + ex.getMessage());
+}
+// clear the form
+Name.setText("");
+Male.setSelected(true);
+Year.setSelectedIndex(0);
+Month.setSelectedIndex(0);
+Day.setSelectedIndex(0);
+Classes.setSelectedIndex(0);
     }//GEN-LAST:event_Add
 
     private void Edit(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Edit
         // TODO add your handling code here:
-         try {
-        File file = new File("students.txt");
-        Scanner scanner = new Scanner(file);
-        ArrayList<String> lines = new ArrayList<>();
-        while (scanner.hasNextLine()) {
-            lines.add(scanner.nextLine());
-        }
-        scanner.close();
-        
-        // Find the student record to be edited and update it
-        String studentName = Name.getText();
-        boolean found = false;
-        for (int i = 0; i < lines.size(); i++) {
-            String[] parts = lines.get(i).split(",");
-            if (parts[0].equals(studentName)) {
-                parts[1] = Classes.getSelectedItem().toString();
-                parts[2] = Major.getText();
-                parts[3] = Address.getText();
-                parts[4] = Email.getText();
-                parts[5] = Year.getSelectedItem().toString();
-                parts[6] = Month.getSelectedItem().toString();
-                parts[7] = Day.getSelectedItem().toString();
-                lines.set(i, String.join(",", parts));
-                found = true;
-                break;
-            }
-        }
-        
-        if (found) {
-            // Write the updated ArrayList back to the file
-            FileWriter fw = new FileWriter(file);
-            PrintWriter pw = new PrintWriter(fw);
-            for (String line : lines) {
-                pw.println(line);
-            }
-            pw.close();
-            JOptionPane.showMessageDialog(null, "Record updated successfully.");
+        Save.setVisible(true);
+         int selectedRow = jTable1.getSelectedRow();
+
+    // Check if a row is actually selected
+    if (selectedRow != -1) {
+        // Get the values from each column of the selected row
+        String name = jTable1.getValueAt(selectedRow, 0).toString();
+        String studentClass = jTable1.getValueAt(selectedRow, 1).toString();
+        String major = jTable1.getValueAt(selectedRow, 2).toString();
+        String gender = jTable1.getValueAt(selectedRow, 3).toString();
+        String address = jTable1.getValueAt(selectedRow, 4).toString();
+        String email = jTable1.getValueAt(selectedRow, 5).toString();
+        String year = jTable1.getValueAt(selectedRow, 6).toString();
+        String month = jTable1.getValueAt(selectedRow, 7).toString();
+        String day = jTable1.getValueAt(selectedRow, 8).toString();
+
+        // Populate the text fields in the form with the selected values
+        Name.setText(name);
+        Classes.setSelectedItem(studentClass);
+        Major.setText(major);
+        if (gender.equals("Male")) {
+            Male.setSelected(true);
         } else {
-            JOptionPane.showMessageDialog(null, "Student not found.");
+            Female.setSelected(true);
         }
-    } catch (IOException ex) {
-        JOptionPane.showMessageDialog(null, "Error writing to file: " + ex.getMessage());
+        Address.setText(address);
+        Email.setText(email);
+        Year.setSelectedItem(year);
+        Month.setSelectedItem(month);
+        Day.setSelectedItem(day);
+    } else {
+        // Show an error message if no row is selected
+        JOptionPane.showMessageDialog(null, "Please select a row to edit.");
     }
     }//GEN-LAST:event_Edit
 
@@ -464,6 +500,7 @@ private void fillDayComboBox(int daysInMonth) {
         model.addColumn("Name");
         model.addColumn("Class");
         model.addColumn("Major");
+        model.addColumn("Gender");
         model.addColumn("Address");
         model.addColumn("Email");
         model.addColumn("Year");
@@ -488,6 +525,142 @@ private void fillDayComboBox(int daysInMonth) {
         e.printStackTrace();
     }
     }//GEN-LAST:event_Table
+
+    private void RefeshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefeshActionPerformed
+        // TODO add your handling code here:
+   File file = new File("Students.txt");
+
+    try {
+        // Create a Scanner object to read data from the file
+        Scanner scanner = new Scanner(file);
+
+        // Create a DefaultTableModel object to hold the data for the JTable
+        DefaultTableModel model = new DefaultTableModel();
+
+        // Add the columns to the DefaultTableModel object
+        model.addColumn("Name");
+        model.addColumn("Class");
+        model.addColumn("Major");
+        model.addColumn("Gender");
+        model.addColumn("Address");
+        model.addColumn("Email");
+        model.addColumn("Year");
+        model.addColumn("Month");
+        model.addColumn("Day");
+
+        // Loop through each line of the file, splitting the data using a delimiter
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            String[] data = line.split(",");
+
+            // Add each row of data to the DefaultTableModel object
+            model.addRow(data);
+        }
+
+        // Set the JTable's model to the DefaultTableModel object
+        jTable1.setModel(model);
+
+        // Close the Scanner object
+        scanner.close();
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    }
+    }//GEN-LAST:event_RefeshActionPerformed
+
+    private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = jTable1.getSelectedRow();
+
+    // If no row is selected, show an error message and return
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a row to delete.");
+        return;
+    }
+
+    // Get the DefaultTableModel object from the JTable
+    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+    // Remove the selected row from the DefaultTableModel object
+    model.removeRow(selectedRow);
+
+    // Save the changes back to the file
+    try {
+        // Create a PrintWriter object to write data to the file
+        PrintWriter writer = new PrintWriter(new FileWriter("Students.txt"));
+
+        // Loop through each row of the DefaultTableModel object
+        for (int i = 0; i < model.getRowCount(); i++) {
+            // Loop through each column of the row
+            for (int j = 0; j < model.getColumnCount(); j++) {
+                // Write the value of the cell to the file, followed by a comma
+                writer.print(model.getValueAt(i, j));
+
+                if (j != model.getColumnCount() - 1) {
+                    writer.print(",");
+                }
+            }
+
+            // Write a new line character to separate the rows
+            writer.println();
+        }
+
+        // Close the PrintWriter object
+        writer.close();
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(this, "Error deleting row: " + e.getMessage());
+    }
+    }//GEN-LAST:event_DeleteActionPerformed
+
+    private void SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveActionPerformed
+        // TODO add your handling code here:
+        
+        int row = jTable1.getSelectedRow(); // get the selected row
+    if (row == -1) {
+        JOptionPane.showMessageDialog(null, "Please select a row to edit.");
+    } else {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        String name = Name.getText();
+        String studentClass = Classes.getSelectedItem().toString();
+        String major = Major.getText();
+        String gender = Male.isSelected() ? "Male" : "Female";
+        String address = Address.getText();
+        String email = Email.getText();
+        String year = Year.getSelectedItem().toString();
+        String month = Month.getSelectedItem().toString();
+        String day = Day.getSelectedItem().toString();
+
+        model.setValueAt(name, row, 0);
+        model.setValueAt(studentClass, row, 1);
+        model.setValueAt(major, row, 2);
+        model.setValueAt(gender, row, 3);
+        model.setValueAt(address, row, 4);
+        model.setValueAt(email, row, 5);
+        model.setValueAt(year, row, 6);
+        model.setValueAt(month, row, 7);
+        model.setValueAt(day, row, 8);
+
+        // write the updated data to the file
+        try {
+            File file = new File("students.txt");
+            PrintWriter pw = new PrintWriter(file);
+
+            for (int i = 0; i < model.getRowCount(); i++) {
+                String rowData = "";
+                for (int j = 0; j < model.getColumnCount(); j++) {
+                    rowData += model.getValueAt(i, j).toString() + ",";
+                }
+                rowData = rowData.substring(0, rowData.length() - 1); // remove the last comma
+                pw.println(rowData);
+            }
+
+            pw.close();
+            JOptionPane.showMessageDialog(null, "Student information updated successfully.");
+            Save.setVisible(false); // hide the save button
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Error writing to file: " + ex.getMessage());
+        }
+    }
+    }//GEN-LAST:event_SaveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -529,15 +702,17 @@ private void fillDayComboBox(int daysInMonth) {
     private javax.swing.JTextField Address;
     private javax.swing.JComboBox<String> Classes;
     private javax.swing.JComboBox<String> Day;
+    private javax.swing.JButton Delete;
     private javax.swing.JTextField Email;
     private javax.swing.JCheckBox Female;
     private javax.swing.JTextField Major;
     private javax.swing.JCheckBox Male;
     private javax.swing.JComboBox<String> Month;
     private javax.swing.JTextField Name;
+    private javax.swing.JButton Refesh;
+    private javax.swing.JButton Save;
     private javax.swing.JComboBox<String> Year;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
