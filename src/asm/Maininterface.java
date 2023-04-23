@@ -3,15 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package asm;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.GenericDeclaration;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 import javax.swing.DefaultComboBoxModel;
@@ -100,6 +96,9 @@ private void fillDayComboBox(int daysInMonth) {
         Classes = new javax.swing.JComboBox<>();
         Refesh = new javax.swing.JButton();
         Save = new javax.swing.JButton();
+        Logout = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        ID = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -135,18 +134,8 @@ private void fillDayComboBox(int daysInMonth) {
         jLabel5.setText("Email");
 
         Male.setText("Male");
-        Male.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Male(evt);
-            }
-        });
 
         Female.setText("Female");
-        Female.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Female(evt);
-            }
-        });
 
         jLabel6.setText("Gender");
 
@@ -157,11 +146,6 @@ private void fillDayComboBox(int daysInMonth) {
         jLabel10.setText("Day");
 
         Day.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        Day.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DayActionPerformed(evt);
-            }
-        });
 
         Month.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         Month.addActionListener(new java.awt.event.ActionListener() {
@@ -179,13 +163,13 @@ private void fillDayComboBox(int daysInMonth) {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Name", "Class", "Major", "Gender", "Address", "Email", "Year", "Month", "Day"
+                "ID", "Name", "Class", "Gender", "Major", "Address", "Email", "Year", "Month", "Day"
             }
         ));
         jTable1.addAncestorListener(new javax.swing.event.AncestorListener() {
@@ -202,7 +186,7 @@ private void fillDayComboBox(int daysInMonth) {
         Classes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A1", "A2", "A3", "A4", "A5", "B1", "B2", "B3", "B4", "B5", "C1", "C2", "C3", "C4", "C5", "D1", "D2", "D3", "D4", "D5", "E1", "E2", "E3", "E4", "E5", "F1", "F2", "F3", "F4", "F5" }));
         Classes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Classes(evt);
+                ClassesActionPerformed(evt);
             }
         });
 
@@ -220,74 +204,92 @@ private void fillDayComboBox(int daysInMonth) {
             }
         });
 
+        Logout.setText("Logout");
+        Logout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LogoutActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setText("ID");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 899, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 23, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel7)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addComponent(jLabel2))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(8, 8, 8)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(Male)
-                                .addGap(18, 18, 18)
-                                .addComponent(Female))
-                            .addComponent(Name)
-                            .addComponent(Major)
-                            .addComponent(Classes, 0, 281, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Save, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addGap(18, 18, 18)
-                                .addComponent(Year, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel8)
-                                .addGap(18, 18, 18)
-                                .addComponent(Month, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel10)
-                                .addGap(18, 18, 18)
-                                .addComponent(Day, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(Address)
-                                    .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(94, 94, 94))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(Delete, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Refesh, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(99, 99, 99))))
+                        .addComponent(Refesh, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(21, 21, 21))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel7)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(Name, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(9, 9, 9))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(Male)
+                                .addGap(18, 18, 18)
+                                .addComponent(Female))
+                            .addComponent(Classes, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(18, 18, 18)
+                        .addComponent(Year, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18)
+                        .addComponent(Month, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel10)
+                        .addGap(18, 18, 18)
+                        .addComponent(Day, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Major, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(Address, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(Email, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jLabel3))
+                .addGap(75, 75, 75))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -297,12 +299,27 @@ private void fillDayComboBox(int daysInMonth) {
                         .addGap(194, 194, 194)
                         .addComponent(jLabel7))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(19, 19, 19)
+                        .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel2)
+                                    .addComponent(Classes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(44, 44, 44))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(Major, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel11))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel4)
-                                    .addComponent(Address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(Address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(24, 24, 24)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel5)
@@ -313,36 +330,23 @@ private void fillDayComboBox(int daysInMonth) {
                                         .addComponent(jLabel10)
                                         .addComponent(Day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(Male)
+                                        .addComponent(Female)
+                                        .addComponent(jLabel6))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel8)
                                         .addComponent(jLabel9)
                                         .addComponent(Month, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(Year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel1)
-                                    .addComponent(Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel2)
-                                    .addComponent(Classes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(25, 25, 25)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(Major, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(Male)
-                                    .addComponent(Female)
-                                    .addComponent(jLabel6))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                                        .addComponent(Year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Add)
                     .addComponent(jButton2)
                     .addComponent(Delete)
                     .addComponent(Save)
                     .addComponent(Refesh))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -387,38 +391,23 @@ private void fillDayComboBox(int daysInMonth) {
         fillDayComboBox(daysInMonth);
     }//GEN-LAST:event_MonthActionPerformed
 
-    private void DayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DayActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DayActionPerformed
-
-    private void Classes(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Classes
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Classes
-
-    private void Male(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Male
-        // TODO add your handling code here:
-       
-    }//GEN-LAST:event_Male
-
-    private void Female(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Female
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Female
-
     private void Add(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add
         // TODO add your handling code here:
     try {
     FileWriter fw = new FileWriter("students.txt", true);
     PrintWriter pw = new PrintWriter(fw);
 
+    String id = ID.getText();
     String name = Name.getText();
     String studentClass = Classes.getSelectedItem().toString();
-    String major = Major.getText();
+    
     String gender = "";
     if (Male.isSelected()) {
         gender = "Male";
     } else if (Female.isSelected()) {
         gender = "Female";
     } 
+    String major = Major.getText();
     String address = Address.getText();
     String email = Email.getText();
     {
@@ -430,8 +419,19 @@ private void fillDayComboBox(int daysInMonth) {
     String month = Month.getSelectedItem().toString();
     String day = Day.getSelectedItem().toString();
     
+    File file = new File("students.txt");
+    Scanner scanner = new Scanner(file);
+    while (scanner.hasNextLine()) {
+        String line = scanner.nextLine();
+        String[] parts = line.split(",");
+        if (parts[0].equals(id)) {
+            JOptionPane.showMessageDialog(null, "ID already exists", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    }
+    scanner.close();
 
-    pw.println(name + "," + studentClass + "," + major + "," + gender + "," + address + "," + email + "," + year + "," + month + "," + day);
+    pw.println(id + "," + name + "," + studentClass + "," + gender + "," + major + "," + address + "," + email + "," + year + "," + month + "," + day);
     pw.flush();
     pw.close();
     JOptionPane.showMessageDialog(null, "Student added to file successfully.");
@@ -439,8 +439,11 @@ private void fillDayComboBox(int daysInMonth) {
     JOptionPane.showMessageDialog(null, "Error writing to file: " + ex.getMessage());
 }
 // clear the form
+ID.setText("");
 Name.setText("");
-Male.setSelected(true);
+Major.setText("");
+Male.setSelected(false);
+Female.setSelected(false);
 Year.setSelectedIndex(0);
 Month.setSelectedIndex(0);
 Day.setSelectedIndex(0);
@@ -450,30 +453,32 @@ Classes.setSelectedIndex(0);
     private void Edit(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Edit
         // TODO add your handling code here:
         Save.setVisible(true);
-         int selectedRow = jTable1.getSelectedRow();
+    int selectedRow = jTable1.getSelectedRow();
 
     // Check if a row is actually selected
     if (selectedRow != -1) {
         // Get the values from each column of the selected row
-        String name = jTable1.getValueAt(selectedRow, 0).toString();
-        String studentClass = jTable1.getValueAt(selectedRow, 1).toString();
-        String major = jTable1.getValueAt(selectedRow, 2).toString();
+        String id = jTable1.getValueAt(selectedRow, 0).toString();
+        String name = jTable1.getValueAt(selectedRow, 1).toString();
+        String studentClass = jTable1.getValueAt(selectedRow, 2).toString();
         String gender = jTable1.getValueAt(selectedRow, 3).toString();
-        String address = jTable1.getValueAt(selectedRow, 4).toString();
-        String email = jTable1.getValueAt(selectedRow, 5).toString();
-        String year = jTable1.getValueAt(selectedRow, 6).toString();
-        String month = jTable1.getValueAt(selectedRow, 7).toString();
-        String day = jTable1.getValueAt(selectedRow, 8).toString();
+        String major = jTable1.getValueAt(selectedRow, 4).toString();
+        String address = jTable1.getValueAt(selectedRow, 5).toString();
+        String email = jTable1.getValueAt(selectedRow, 6).toString();
+        String year = jTable1.getValueAt(selectedRow, 7).toString();
+        String month = jTable1.getValueAt(selectedRow, 8).toString();
+        String day = jTable1.getValueAt(selectedRow, 9).toString();
 
         // Populate the text fields in the form with the selected values
+        ID.setText(id);
         Name.setText(name);
         Classes.setSelectedItem(studentClass);
-        Major.setText(major);
         if (gender.equals("Male")) {
             Male.setSelected(true);
         } else {
             Female.setSelected(true);
         }
+         Major.setText(major);
         Address.setText(address);
         Email.setText(email);
         Year.setSelectedItem(year);
@@ -487,6 +492,7 @@ Classes.setSelectedIndex(0);
 
     private void Table(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_Table
         // TODO add your handling code here:
+        
         File file = new File("Students.txt");
 
     try {
@@ -497,10 +503,11 @@ Classes.setSelectedIndex(0);
         DefaultTableModel model = new DefaultTableModel();
 
         // Add the columns to the DefaultTableModel object
+        model.addColumn("ID");
         model.addColumn("Name");
         model.addColumn("Class");
-        model.addColumn("Major");
         model.addColumn("Gender");
+        model.addColumn("Major");
         model.addColumn("Address");
         model.addColumn("Email");
         model.addColumn("Year");
@@ -518,6 +525,9 @@ Classes.setSelectedIndex(0);
 
         // Set the JTable's model to the DefaultTableModel object
         jTable1.setModel(model);
+        
+          // Disable editing of cells in the table
+        jTable1.setDefaultEditor(Object.class, null);
 
         // Close the Scanner object
         scanner.close();
@@ -538,10 +548,11 @@ Classes.setSelectedIndex(0);
         DefaultTableModel model = new DefaultTableModel();
 
         // Add the columns to the DefaultTableModel object
+        model.addColumn("ID");
         model.addColumn("Name");
         model.addColumn("Class");
-        model.addColumn("Major");
         model.addColumn("Gender");
+        model.addColumn("Major");
         model.addColumn("Address");
         model.addColumn("Email");
         model.addColumn("Year");
@@ -565,6 +576,16 @@ Classes.setSelectedIndex(0);
     } catch (FileNotFoundException e) {
         e.printStackTrace();
     }
+    // clear the form
+ID.setText("");
+Name.setText("");
+Major.setText("");
+Male.setSelected(false);
+Female.setSelected(false);
+Year.setSelectedIndex(0);
+Month.setSelectedIndex(0);
+Day.setSelectedIndex(0);
+Classes.setSelectedIndex(0);
     }//GEN-LAST:event_RefeshActionPerformed
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
@@ -613,54 +634,87 @@ Classes.setSelectedIndex(0);
 
     private void SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveActionPerformed
         // TODO add your handling code here:
-        
         int row = jTable1.getSelectedRow(); // get the selected row
-    if (row == -1) {
-        JOptionPane.showMessageDialog(null, "Please select a row to edit.");
-    } else {
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        String name = Name.getText();
-        String studentClass = Classes.getSelectedItem().toString();
-        String major = Major.getText();
-        String gender = Male.isSelected() ? "Male" : "Female";
-        String address = Address.getText();
-        String email = Email.getText();
-        String year = Year.getSelectedItem().toString();
-        String month = Month.getSelectedItem().toString();
-        String day = Day.getSelectedItem().toString();
+if (row == -1) {
+    JOptionPane.showMessageDialog(null, "Please select a row to edit.");
+} else {
+    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    String id= ID.getText();
+    String name = Name.getText();
+    String studentClass = Classes.getSelectedItem().toString();
+    String major = Major.getText();
+    String gender = Male.isSelected() ? "Male" : "Female";
+    String address = Address.getText();
+    String email = Email.getText();
+    String year = Year.getSelectedItem().toString();
+    String month = Month.getSelectedItem().toString();
+    String day = Day.getSelectedItem().toString();
 
-        model.setValueAt(name, row, 0);
-        model.setValueAt(studentClass, row, 1);
-        model.setValueAt(major, row, 2);
-        model.setValueAt(gender, row, 3);
-        model.setValueAt(address, row, 4);
-        model.setValueAt(email, row, 5);
-        model.setValueAt(year, row, 6);
-        model.setValueAt(month, row, 7);
-        model.setValueAt(day, row, 8);
-
-        // write the updated data to the file
-        try {
-            File file = new File("students.txt");
-            PrintWriter pw = new PrintWriter(file);
-
-            for (int i = 0; i < model.getRowCount(); i++) {
-                String rowData = "";
-                for (int j = 0; j < model.getColumnCount(); j++) {
-                    rowData += model.getValueAt(i, j).toString() + ",";
-                }
-                rowData = rowData.substring(0, rowData.length() - 1); // remove the last comma
-                pw.println(rowData);
-            }
-
-            pw.close();
-            JOptionPane.showMessageDialog(null, "Student information updated successfully.");
-            Save.setVisible(false); // hide the save button
-        } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "Error writing to file: " + ex.getMessage());
-        }
+    // Check if the ID has been changed
+    if (!id.equals(model.getValueAt(row, 0).toString())) {
+        JOptionPane.showMessageDialog(null, "Sorry, you cannot change the ID.");
+        ID.setText(model.getValueAt(row, 0).toString()); // Reset the ID field to the original value
+        return; // Stop execution of the code
     }
+
+    model.setValueAt(name, row, 1);
+    model.setValueAt(studentClass, row, 2);
+    model.setValueAt(major, row, 3);
+    model.setValueAt(gender, row, 4);
+    model.setValueAt(address, row, 5);
+    model.setValueAt(email, row, 6);
+    model.setValueAt(year, row, 7);
+    model.setValueAt(month, row, 8);
+    model.setValueAt(day, row, 9);
+
+    // write the updated data to the file
+    try {
+
+        File file = new File("students.txt");
+        PrintWriter pw = new PrintWriter(file);
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String rowData = "";
+            for (int j = 0; j < model.getColumnCount(); j++) {
+                rowData += model.getValueAt(i, j).toString() + ",";
+            }
+            rowData = rowData.substring(0, rowData.length() - 1); // remove the last comma
+            pw.println(rowData);
+        }
+
+        pw.close();
+        JOptionPane.showMessageDialog(null, "Student information updated successfully.");
+        Save.setVisible(false); // hide the save button
+    } catch (FileNotFoundException ex) {
+        JOptionPane.showMessageDialog(null, "Error writing to file: " + ex.getMessage());
+    }
+    
+}
+// clear the form
+ID.setText("");
+Name.setText("");
+Major.setText("");
+Male.setSelected(false);
+Female.setSelected(false);
+Year.setSelectedIndex(0);
+Month.setSelectedIndex(0);
+Day.setSelectedIndex(0);
+Classes.setSelectedIndex(0);
     }//GEN-LAST:event_SaveActionPerformed
+
+    private void LogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutActionPerformed
+        // TODO add your handling code here:
+        LoginInterface login = new LoginInterface();
+        login.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_LogoutActionPerformed
+
+    private void ClassesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClassesActionPerformed
+        // TODO add your handling code here:
+//        String[] classes = {"A1", "A2", "A3", "A4", "A5", "B1", "B2", "B3", "B4", "B5", "C1", "C2", "C3", "C4", "C5", "D1", "D2", "D3", "D4", "D5", "E1", "E2", "E3", "E4", "E5", "F1", "F2", "F3", "F4", "F5"};
+//    DefaultComboBoxModel<String> classesModel =    new DefaultComboBoxModel<>(classes);
+//    Classes.setModel(classesModel);
+    }//GEN-LAST:event_ClassesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -705,6 +759,8 @@ Classes.setSelectedIndex(0);
     private javax.swing.JButton Delete;
     private javax.swing.JTextField Email;
     private javax.swing.JCheckBox Female;
+    private javax.swing.JTextField ID;
+    private javax.swing.JButton Logout;
     private javax.swing.JTextField Major;
     private javax.swing.JCheckBox Male;
     private javax.swing.JComboBox<String> Month;
@@ -715,6 +771,7 @@ Classes.setSelectedIndex(0);
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
