@@ -74,14 +74,9 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                              <Component id="Male" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="Female" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="Classes" alignment="0" min="-2" pref="281" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="Classes" pref="281" max="32767" attributes="0"/>
+                          <Component id="Gender" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -166,9 +161,8 @@
                                       <Component id="Day" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                      <Component id="Male" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="Female" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="Gender" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -253,16 +247,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="Email">
-    </Component>
-    <Component class="javax.swing.JCheckBox" name="Male">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Male"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JCheckBox" name="Female">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Female"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
@@ -498,6 +482,23 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="ID">
+    </Component>
+    <Component class="javax.swing.JComboBox" name="Gender">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="3">
+            <StringItem index="0" value="Male"/>
+            <StringItem index="1" value="Female"/>
+            <StringItem index="2" value="Other"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="GenderActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

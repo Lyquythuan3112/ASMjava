@@ -17,7 +17,8 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author ASUS
  */
-public class Maininterface extends javax.swing.JFrame {
+    public class Maininterface extends javax.swing.JFrame {
+    Students student; 
 
     /**
      * Creates new form Maininterface
@@ -28,6 +29,160 @@ public class Maininterface extends javax.swing.JFrame {
         fillMonthComboBox();
         Save.setVisible(false);
     }
+    
+    // method to save a student to file
+    private void saveStudent() {
+        try {
+            FileWriter fw = new FileWriter("students.txt", true);
+            String id;
+            String name;
+            String studentClass;
+            String gender;
+            String major;
+            String address;
+            String email;
+            String year;
+            String month;
+            String day;
+            try (PrintWriter pw = new PrintWriter(fw)) {
+                id = ID.getText();
+                name = Name.getText();
+                studentClass = Classes.getSelectedItem().toString();
+                gender = Gender.getSelectedItem().toString();
+                major = Major.getText();
+                address = Address.getText();
+                email = Email.getText();
+                {
+                    if (!email.contains("@Gmail.com")) {
+                        JOptionPane.showMessageDialog(null, "Invalid email address", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }   year = Year.getSelectedItem().toString();
+                month = Month.getSelectedItem().toString();
+                day = Day.getSelectedItem().toString();
+
+                // check if ID already exists
+                try (Scanner scanner = new Scanner(new File("students.txt"))) {
+                    while (scanner.hasNextLine()) {
+                        String line = scanner.nextLine();
+                        String[] parts = line.split(",");
+                        if (parts[0].equals(id)) {
+                            JOptionPane.showMessageDialog(null, "ID already exists", "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                    }
+                } catch (FileNotFoundException ex) {
+                    JOptionPane.showMessageDialog(null, "Error reading file: " + ex.getMessage());
+                    return;
+                }
+
+                // write student to file
+                pw.println(id + "," + name + "," + studentClass + "," + gender + "," + major + "," + address + "," + email + "," + year + "," + month + "," + day);
+                pw.flush();
+            }
+            JOptionPane.showMessageDialog(null, "Student added to file successfully.");
+
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error writing to file: " + ex.getMessage());
+        }
+    }
+
+
+    public class Students{
+        // Declare the fields
+private String id;
+private String name;
+private String studentClass;
+private String gender;
+private String major;
+private String address;
+private String email;
+private String year;
+private String month;
+private String day;
+
+// Define the getters and setters
+public String getId() {
+    return id;
+}
+
+public void setId(String id) {
+    this.id = id;
+}
+
+public String getName() {
+    return name;
+}
+
+public void setName(String name) {
+    this.name = name;
+}
+
+public String getStudentClass() {
+    return studentClass;
+}
+
+public void setStudentClass(String studentClass) {
+    this.studentClass = studentClass;
+}
+
+public String getGender() {
+    return gender;
+}
+
+public void setGender(String gender) {
+    this.gender = gender;
+}
+
+public String getMajor() {
+    return major;
+}
+
+public void setMajor(String major) {
+    this.major = major;
+}
+
+public String getAddress() {
+    return address;
+}
+
+public void setAddress(String address) {
+    this.address = address;
+}
+
+public String getEmail() {
+    return email;
+}
+
+public void setEmail(String email) {
+    this.email = email;
+}
+
+public String getYear() {
+    return year;
+}
+
+public void setYear(String year) {
+    this.year = year;
+}
+
+public String getMonth() {
+    return month;
+}
+
+public void setMonth(String month) {
+    this.month = month;
+}
+
+public String getDay() {
+    return day;
+}
+
+public void setDay(String day) {
+    this.day = day;
+}
+    }
+    
 private void fillYearComboBox() {
            int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         DefaultComboBoxModel yearModel = new DefaultComboBoxModel();
@@ -81,8 +236,6 @@ private void fillDayComboBox(int daysInMonth) {
         Address = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         Email = new javax.swing.JTextField();
-        Male = new javax.swing.JCheckBox();
-        Female = new javax.swing.JCheckBox();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -99,6 +252,7 @@ private void fillDayComboBox(int daysInMonth) {
         Logout = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         ID = new javax.swing.JTextField();
+        Gender = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -132,10 +286,6 @@ private void fillDayComboBox(int daysInMonth) {
         jLabel4.setText("Address");
 
         jLabel5.setText("Email");
-
-        Male.setText("Male");
-
-        Female.setText("Female");
 
         jLabel6.setText("Gender");
 
@@ -213,6 +363,13 @@ private void fillDayComboBox(int daysInMonth) {
 
         jLabel11.setText("ID");
 
+        Gender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female", "Other" }));
+        Gender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GenderActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -257,13 +414,9 @@ private void fillDayComboBox(int daysInMonth) {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(Male)
-                                .addGap(18, 18, 18)
-                                .addComponent(Female))
-                            .addComponent(Classes, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Classes, 0, 281, Short.MAX_VALUE)
+                            .addComponent(Gender, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -330,9 +483,8 @@ private void fillDayComboBox(int daysInMonth) {
                                         .addComponent(jLabel10)
                                         .addComponent(Day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(Male)
-                                        .addComponent(Female)
-                                        .addComponent(jLabel6))
+                                        .addComponent(jLabel6)
+                                        .addComponent(Gender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel8)
                                         .addComponent(jLabel9)
@@ -392,62 +544,20 @@ private void fillDayComboBox(int daysInMonth) {
     }//GEN-LAST:event_MonthActionPerformed
 
     private void Add(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add
-        // TODO add your handling code here:
-    try {
-    FileWriter fw = new FileWriter("students.txt", true);
-    PrintWriter pw = new PrintWriter(fw);
-
-    String id = ID.getText();
-    String name = Name.getText();
-    String studentClass = Classes.getSelectedItem().toString();
+        // Save the student
+    saveStudent();
     
-    String gender = "";
-    if (Male.isSelected()) {
-        gender = "Male";
-    } else if (Female.isSelected()) {
-        gender = "Female";
-    } 
-    String major = Major.getText();
-    String address = Address.getText();
-    String email = Email.getText();
-    {
-            if (!email.contains("@")) {
-        JOptionPane.showMessageDialog(null, "Invalid email address", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }}
-    String year = Year.getSelectedItem().toString();
-    String month = Month.getSelectedItem().toString();
-    String day = Day.getSelectedItem().toString();
-    
-    File file = new File("students.txt");
-    Scanner scanner = new Scanner(file);
-    while (scanner.hasNextLine()) {
-        String line = scanner.nextLine();
-        String[] parts = line.split(",");
-        if (parts[0].equals(id)) {
-            JOptionPane.showMessageDialog(null, "ID already exists", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-    }
-    scanner.close();
-
-    pw.println(id + "," + name + "," + studentClass + "," + gender + "," + major + "," + address + "," + email + "," + year + "," + month + "," + day);
-    pw.flush();
-    pw.close();
-    JOptionPane.showMessageDialog(null, "Student added to file successfully.");
-} catch (IOException ex) {
-    JOptionPane.showMessageDialog(null, "Error writing to file: " + ex.getMessage());
-}
-// clear the form
-ID.setText("");
-Name.setText("");
-Major.setText("");
-Male.setSelected(false);
-Female.setSelected(false);
-Year.setSelectedIndex(0);
-Month.setSelectedIndex(0);
-Day.setSelectedIndex(0);
-Classes.setSelectedIndex(0);
+    // Clear the form
+    ID.setText("");
+    Name.setText("");
+    Major.setText("");
+    Gender.setSelectedIndex(0);
+    Year.setSelectedIndex(0);
+    Month.setSelectedIndex(0);
+    Day.setSelectedIndex(0);
+    Classes.setSelectedIndex(0);
+    Address.setText("");
+    Email.setText("");
     }//GEN-LAST:event_Add
 
     private void Edit(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Edit
@@ -473,12 +583,8 @@ Classes.setSelectedIndex(0);
         ID.setText(id);
         Name.setText(name);
         Classes.setSelectedItem(studentClass);
-        if (gender.equals("Male")) {
-            Male.setSelected(true);
-        } else {
-            Female.setSelected(true);
-        }
-         Major.setText(major);
+        Gender.setSelectedItem(gender);
+        Major.setText(major);
         Address.setText(address);
         Email.setText(email);
         Year.setSelectedItem(year);
@@ -488,6 +594,7 @@ Classes.setSelectedIndex(0);
         // Show an error message if no row is selected
         JOptionPane.showMessageDialog(null, "Please select a row to edit.");
     }
+    
     }//GEN-LAST:event_Edit
 
     private void Table(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_Table
@@ -496,41 +603,35 @@ Classes.setSelectedIndex(0);
         File file = new File("Students.txt");
 
     try {
-        // Create a Scanner object to read data from the file
-        Scanner scanner = new Scanner(file);
-
-        // Create a DefaultTableModel object to hold the data for the JTable
-        DefaultTableModel model = new DefaultTableModel();
-
-        // Add the columns to the DefaultTableModel object
-        model.addColumn("ID");
-        model.addColumn("Name");
-        model.addColumn("Class");
-        model.addColumn("Gender");
-        model.addColumn("Major");
-        model.addColumn("Address");
-        model.addColumn("Email");
-        model.addColumn("Year");
-        model.addColumn("Month");
-        model.addColumn("Day");
-
-        // Loop through each line of the file, splitting the data using a delimiter
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            String[] data = line.split(",");
-
-            // Add each row of data to the DefaultTableModel object
-            model.addRow(data);
-        }
-
-        // Set the JTable's model to the DefaultTableModel object
-        jTable1.setModel(model);
-        
-          // Disable editing of cells in the table
-        jTable1.setDefaultEditor(Object.class, null);
-
-        // Close the Scanner object
-        scanner.close();
+            // Create a DefaultTableModel object to hold the data for the JTable
+            try ( // Create a Scanner object to read data from the file
+                    Scanner scanner = new Scanner(file)) {
+                // Create a DefaultTableModel object to hold the data for the JTable
+                DefaultTableModel model = new DefaultTableModel();
+                // Add the columns to the DefaultTableModel object
+                model.addColumn("ID");
+                model.addColumn("Name");
+                model.addColumn("Class");
+                model.addColumn("Gender");
+                model.addColumn("Major");
+                model.addColumn("Address");
+                model.addColumn("Email");
+                model.addColumn("Year");
+                model.addColumn("Month");
+                model.addColumn("Day");
+                // Loop through each line of the file, splitting the data using a delimiter
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    String[] data = line.split(",");
+                    
+                    // Add each row of data to the DefaultTableModel object
+                    model.addRow(data);
+                }       // Set the JTable's model to the DefaultTableModel object
+                jTable1.setModel(model);
+                // Disable editing of cells in the table
+                jTable1.setDefaultEditor(Object.class, null);
+                // Close the Scanner object
+            }
     } catch (FileNotFoundException e) {
         e.printStackTrace();
     }
@@ -580,8 +681,6 @@ Classes.setSelectedIndex(0);
 ID.setText("");
 Name.setText("");
 Major.setText("");
-Male.setSelected(false);
-Female.setSelected(false);
 Year.setSelectedIndex(0);
 Month.setSelectedIndex(0);
 Day.setSelectedIndex(0);
@@ -631,75 +730,71 @@ Classes.setSelectedIndex(0);
         JOptionPane.showMessageDialog(this, "Error deleting row: " + e.getMessage());
     }
     }//GEN-LAST:event_DeleteActionPerformed
-
+    
     private void SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveActionPerformed
         // TODO add your handling code here:
         int row = jTable1.getSelectedRow(); // get the selected row
-if (row == -1) {
-    JOptionPane.showMessageDialog(null, "Please select a row to edit.");
-} else {
-    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-    String id= ID.getText();
-    String name = Name.getText();
-    String studentClass = Classes.getSelectedItem().toString();
-    String major = Major.getText();
-    String gender = Male.isSelected() ? "Male" : "Female";
-    String address = Address.getText();
-    String email = Email.getText();
-    String year = Year.getSelectedItem().toString();
-    String month = Month.getSelectedItem().toString();
-    String day = Day.getSelectedItem().toString();
+    if (row == -1) {
+        JOptionPane.showMessageDialog(null, "Please select a row to edit.");
+    } else {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        String id = ID.getText();
+        String name = Name.getText();
+        String studentClass = Classes.getSelectedItem().toString();
+        String gender = Gender.getSelectedItem().toString();
+        String major = Major.getText();
+        String address = Address.getText();
+        String email = Email.getText();
+        String year = Year.getSelectedItem().toString();
+        String month = Month.getSelectedItem().toString();
+        String day = Day.getSelectedItem().toString();
 
-    // Check if the ID has been changed
-    if (!id.equals(model.getValueAt(row, 0).toString())) {
-        JOptionPane.showMessageDialog(null, "Sorry, you cannot change the ID.");
-        ID.setText(model.getValueAt(row, 0).toString()); // Reset the ID field to the original value
-        return; // Stop execution of the code
-    }
-
-    model.setValueAt(name, row, 1);
-    model.setValueAt(studentClass, row, 2);
-    model.setValueAt(major, row, 3);
-    model.setValueAt(gender, row, 4);
-    model.setValueAt(address, row, 5);
-    model.setValueAt(email, row, 6);
-    model.setValueAt(year, row, 7);
-    model.setValueAt(month, row, 8);
-    model.setValueAt(day, row, 9);
-
-    // write the updated data to the file
-    try {
-
-        File file = new File("students.txt");
-        PrintWriter pw = new PrintWriter(file);
-
-        for (int i = 0; i < model.getRowCount(); i++) {
-            String rowData = "";
-            for (int j = 0; j < model.getColumnCount(); j++) {
-                rowData += model.getValueAt(i, j).toString() + ",";
-            }
-            rowData = rowData.substring(0, rowData.length() - 1); // remove the last comma
-            pw.println(rowData);
+        // Check if the ID has been changed
+        if (!id.equals(model.getValueAt(row, 0).toString())) {
+            JOptionPane.showMessageDialog(null, "Sorry, you cannot change the ID.");
+            ID.setText(model.getValueAt(row, 0).toString()); // Reset the ID fiel   d to the original value
+            return; // Stop execution of the code
         }
+        model.setValueAt(name, row, 1);
+        model.setValueAt(studentClass, row, 2);
+        model.setValueAt(gender, row, 3);
+        model.setValueAt(major, row, 4);
+        model.setValueAt(address, row, 5);
+        model.setValueAt(email, row, 6);
+        model.setValueAt(year, row, 7);
+        model.setValueAt(month, row, 8);
+        model.setValueAt(day, row, 9);
 
-        pw.close();
-        JOptionPane.showMessageDialog(null, "Student information updated successfully.");
-        Save.setVisible(false); // hide the save button
-    } catch (FileNotFoundException ex) {
-        JOptionPane.showMessageDialog(null, "Error writing to file: " + ex.getMessage());
+        // Write the updated data to the file
+        try {
+            File file = new File("students.txt");
+            PrintWriter pw = new PrintWriter(file);
+
+            for (int i = 0; i < model.getRowCount(); i++) {
+                String rowData = "";
+                for (int j = 0; j < model.getColumnCount(); j++) {
+                    rowData += model.getValueAt(i, j).toString() + ",";
+                }
+                rowData = rowData.substring(0, rowData.length() - 1); // remove the last comma
+                pw.println(rowData);
+            }
+
+            pw.close();
+            JOptionPane.showMessageDialog(null, "Student information updated successfully.");
+            Save.setVisible(false); // hide the save button
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Error writing to file: " + ex.getMessage());
+        }
+Save.setVisible(false);
+        // Clear the form
+        ID.setText("");
+        Name.setText("");
+        Major.setText("");
+        Year.setSelectedIndex(0);
+        Month.setSelectedIndex(0);
+        Day.setSelectedIndex(0);
+        Classes.setSelectedIndex(0);
     }
-    
-}
-// clear the form
-ID.setText("");
-Name.setText("");
-Major.setText("");
-Male.setSelected(false);
-Female.setSelected(false);
-Year.setSelectedIndex(0);
-Month.setSelectedIndex(0);
-Day.setSelectedIndex(0);
-Classes.setSelectedIndex(0);
     }//GEN-LAST:event_SaveActionPerformed
 
     private void LogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutActionPerformed
@@ -715,6 +810,10 @@ Classes.setSelectedIndex(0);
 //    DefaultComboBoxModel<String> classesModel =    new DefaultComboBoxModel<>(classes);
 //    Classes.setModel(classesModel);
     }//GEN-LAST:event_ClassesActionPerformed
+
+    private void GenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenderActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_GenderActionPerformed
 
     /**
      * @param args the command line arguments
@@ -758,11 +857,10 @@ Classes.setSelectedIndex(0);
     private javax.swing.JComboBox<String> Day;
     private javax.swing.JButton Delete;
     private javax.swing.JTextField Email;
-    private javax.swing.JCheckBox Female;
+    private javax.swing.JComboBox<String> Gender;
     private javax.swing.JTextField ID;
     private javax.swing.JButton Logout;
     private javax.swing.JTextField Major;
-    private javax.swing.JCheckBox Male;
     private javax.swing.JComboBox<String> Month;
     private javax.swing.JTextField Name;
     private javax.swing.JButton Refesh;
