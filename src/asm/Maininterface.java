@@ -32,61 +32,67 @@ import javax.swing.table.DefaultTableModel;
     
     // method to save a student to file
     private void saveStudent() {
-        try {
-            FileWriter fw = new FileWriter("students.txt", true);
-            String id;
-            String name;
-            String studentClass;
-            String gender;
-            String major;
-            String address;
-            String email;
-            String year;
-            String month;
-            String day;
-            try (PrintWriter pw = new PrintWriter(fw)) {
-                id = ID.getText();
-                name = Name.getText();
-                studentClass = Classes.getSelectedItem().toString();
-                gender = Gender.getSelectedItem().toString();
-                major = Major.getText();
-                address = Address.getText();
-                email = Email.getText();
-                {
-                    if (!email.contains("@Gmail.com")) {
-                        JOptionPane.showMessageDialog(null, "Invalid email address", "Error", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-                }  
-                year = Year.getSelectedItem().toString();
-                month = Month.getSelectedItem().toString();
-                day = Day.getSelectedItem().toString();
+        // TODO add your handling code here:
+    String id, name, studentClass, gender, major, address, email, year, month, day;
 
-                // check if ID already exists
-                try (Scanner scanner = new Scanner(new File("students.txt"))) {
-                    while (scanner.hasNextLine()) {
-                        String line = scanner.nextLine();
-                        String[] parts = line.split(",");
-                        if (parts[0].equals(id)) {
-                            JOptionPane.showMessageDialog(null, "ID already exists", "Error", JOptionPane.ERROR_MESSAGE);
-                            return;
-                        }
-                    }
-                } catch (FileNotFoundException ex) {
-                    JOptionPane.showMessageDialog(null, "Error reading file: " + ex.getMessage());
-                    return;
-                }
+    // Get the values from the input fields
+    id = ID.getText();
+    name = Name.getText();
+    studentClass = Classes.getSelectedItem().toString();
+    gender = Gender.getSelectedItem().toString();
+    major = Major.getText();
+    address = Address.getText();
+    email = Email.getText();
+    year = Year.getSelectedItem().toString();
+    month = Month.getSelectedItem().toString();
+    day = Day.getSelectedItem().toString();
 
-                // write student to file
-                pw.println(id + "," + name + "," + studentClass + "," + gender + "," + major + "," + address + "," + email + "," + year + "," + month + "," + day);
-                pw.flush();
-            }
-            JOptionPane.showMessageDialog(null, "Student added to file successfully.");
-
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Error writing to file: " + ex.getMessage());
-        }
+    // Validate the input fields
+    boolean validInput = true;
+    if (id.isEmpty() || name.isEmpty() || major.isEmpty() || address.isEmpty() || email.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Please fill out all required fields", "Error", JOptionPane.ERROR_MESSAGE);
+        validInput = false;
     }
+    if (!email.contains("@Gmail.com")) {
+        JOptionPane.showMessageDialog(null, "Invalid email address", "Error", JOptionPane.ERROR_MESSAGE);
+        validInput = false;
+    }
+
+    // check if ID already exists
+    try (Scanner scanner = new Scanner(new File("students.txt"))) {
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            String[] parts = line.split(",");
+            if (parts[0].equals(id)) {
+                JOptionPane.showMessageDialog(null, "ID already exists", "Error", JOptionPane.ERROR_MESSAGE);
+                validInput = false;
+            }
+        }
+    } catch (FileNotFoundException ex) {
+        JOptionPane.showMessageDialog(null, "Error reading file: " + ex.getMessage());
+        validInput = false;
+    }
+
+    // Save the data to the file if input is valid
+    if (validInput) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter("students.txt", true))) {
+            pw.println(id + "," + name + "," + studentClass + "," + gender + "," + major + "," + address + "," + email + "," + year + "," + month + "," + day);
+            JOptionPane.showMessageDialog(null, "Data saved successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error writing to file: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+            // Clear the form
+    ID.setText("");
+    Name.setText("");
+    Major.setText("");
+    Gender.setSelectedIndex(0);
+    Year.setSelectedIndex(0);
+    Month.setSelectedIndex(0);
+    Day.setSelectedIndex(0);
+    Classes.setSelectedIndex(0);
+    Address.setText("");
+    Email.setText("");
+    }}
 
 
     public class Students{
@@ -548,17 +554,7 @@ private void fillDayComboBox(int daysInMonth) {
         // Save the student
     saveStudent();
     
-    // Clear the form
-    ID.setText("");
-    Name.setText("");
-    Major.setText("");
-    Gender.setSelectedIndex(0);
-    Year.setSelectedIndex(0);
-    Month.setSelectedIndex(0);
-    Day.setSelectedIndex(0);
-    Classes.setSelectedIndex(0);
-    Address.setText("");
-    Email.setText("");
+
     }//GEN-LAST:event_Add
 
     private void Edit(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Edit
@@ -689,46 +685,44 @@ Classes.setSelectedIndex(0);
     }//GEN-LAST:event_RefeshActionPerformed
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
-        // TODO add your handling code here:
-        int selectedRow = jTable1.getSelectedRow();
-
-    // If no row is selected, show an error message and return
-    if (selectedRow == -1) {
-        JOptionPane.showMessageDialog(this, "Please select a row to delete.");
-        return;
-    }
+         // TODO add your handling code here:
+    int selectedRow = jTable1.getSelectedRow();
 
     // Get the DefaultTableModel object from the JTable
     DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
 
-    // Remove the selected row from the DefaultTableModel object
-    model.removeRow(selectedRow);
+    // Confirm if the user really wants to delete the row
+    int option = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this row?", "Confirmation", JOptionPane.YES_NO_OPTION);
+    if (option == JOptionPane.YES_OPTION) {
+        // Remove the selected row from the DefaultTableModel object
+        model.removeRow(selectedRow);
 
-    // Save the changes back to the file
-    try {
-        // Create a PrintWriter object to write data to the file
-        PrintWriter writer = new PrintWriter(new FileWriter("Students.txt"));
+        // Save the changes back to the file
+        try {
+            // Create a PrintWriter object to write data to the file
+            PrintWriter writer = new PrintWriter(new FileWriter("Students.txt"));
 
-        // Loop through each row of the DefaultTableModel object
-        for (int i = 0; i < model.getRowCount(); i++) {
-            // Loop through each column of the row
-            for (int j = 0; j < model.getColumnCount(); j++) {
-                // Write the value of the cell to the file, followed by a comma
-                writer.print(model.getValueAt(i, j));
+            // Loop through each row of the DefaultTableModel object
+            for (int i = 0; i < model.getRowCount(); i++) {
+                // Loop through each column of the row
+                for (int j = 0; j < model.getColumnCount(); j++) {
+                    // Write the value of the cell to the file, followed by a comma
+                    writer.print(model.getValueAt(i, j));
 
-                if (j != model.getColumnCount() - 1) {
-                    writer.print(",");
+                    if (j != model.getColumnCount() - 1) {
+                        writer.print(",");
+                    }
                 }
+
+                // Write a new line character to separate the rows
+                writer.println();
             }
 
-            // Write a new line character to separate the rows
-            writer.println();
+            // Close the PrintWriter object
+            writer.close();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error deleting row: " + e.getMessage());
         }
-
-        // Close the PrintWriter object
-        writer.close();
-    } catch (IOException e) {
-        JOptionPane.showMessageDialog(this, "Error deleting row: " + e.getMessage());
     }
     }//GEN-LAST:event_DeleteActionPerformed
     
