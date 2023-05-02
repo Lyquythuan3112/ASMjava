@@ -57,7 +57,8 @@ import javax.swing.table.DefaultTableModel;
                         JOptionPane.showMessageDialog(null, "Invalid email address", "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                }   year = Year.getSelectedItem().toString();
+                }  
+                year = Year.getSelectedItem().toString();
                 month = Month.getSelectedItem().toString();
                 day = Day.getSelectedItem().toString();
 
@@ -760,7 +761,11 @@ Classes.setSelectedIndex(0);
         model.setValueAt(gender, row, 3);
         model.setValueAt(major, row, 4);
         model.setValueAt(address, row, 5);
-        model.setValueAt(email, row, 6);
+        if (!email.contains("@Gmail.com")) {
+                        JOptionPane.showMessageDialog(null, "Invalid email address", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    } else {
+        model.setValueAt(email, row, 6);}
         model.setValueAt(year, row, 7);
         model.setValueAt(month, row, 8);
         model.setValueAt(day, row, 9);
